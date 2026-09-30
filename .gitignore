@@ -9,6 +9,8 @@ bot/memory.db
 SERVER.md
 DEPLOY.md
 tunnel/ollama-tunnel.ps1
+tunnel/start-llm.ps1
+tunnel/stop-llm.ps1
 examples/llm-env.ps1
 examples/llm-env.sh
 

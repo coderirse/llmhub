@@ -23,9 +23,23 @@ VPS: Open WebUI（:3998）→ 聊天网页，接同一个网关
 
 ```
 ├── tunnel/ollama-tunnel.example.ps1   # 本地守护脚本模板（保活 ollama serve + ssh 反向隧道）
+├── tunnel/start-llm.cmd 等            # 本地模型手动启停的便捷包装（调用同名 .ps1，模板见上）
+├── bot/                               # 飞书机器人（WebSocket 长连接 + CardKit 流式卡片）
 ├── examples/                          # CLI 接入示例（环境变量加载 + chat 调用）
 ├── SERVER.md / DEPLOY.md              # 本地保留（含真实 IP/域名，已 gitignore）
 └── .secrets/                          # 全部凭据（已 gitignore，永不入库）
+```
+
+## 本地模型调优备忘
+
+- `OLLAMA_CONTEXT_LENGTH=16384`：编码类 agent（opencode/codex）的提示词很大，Ollama 默认 4K 会截断
+- **关闭 qwen3 思考模式**：qwen3 默认输出思考内容，在 agent 大提示词下每轮要 5-7 分钟。
+  做一个强制 `/no_think` 的变体即可提速十倍以上：
+
+```bash
+ollama show qwen3:8b --template > q3.tmpl
+# 把模板里的  "and $.IsThinkSet (eq $i $lastUserIdx)"  改成  "(eq $i $lastUserIdx)"
+# 然后 Modelfile 写 FROM qwen3:8b + TEMPLATE（改后的模板），ollama create qwen3:8b-fast -f Modelfile
 ```
 
 > 真实环境信息（服务器 IP、域名、实例 ID）一律不进仓库：入库的只有 `*.example` 模板，
