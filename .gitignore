@@ -1,5 +1,9 @@
 # 密钥与凭据 —— 永不入库
 .secrets/
+bot/feishu.env
+
+# 本地运行产物
+bot/memory.db
 
 # 真实环境信息（含服务器 IP / 域名 / 实例 ID）—— 本地保留，只提交 *.example 模板
 SERVER.md
@@ -11,7 +15,7 @@ examples/llm-env.sh
 # 下载的构建产物
 downloads/
 
-# 本地运行产物
+# 其他本地产物
 *.log
 __pycache__/
 *.pyc

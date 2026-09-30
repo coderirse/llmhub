@@ -1,0 +1,17 @@
+# 飞书机器人 systemd 服务模板（复制为 feishu-bot.service 并按需修改）
+# 部署位置: /etc/systemd/system/feishu-bot.service
+
+[Unit]
+Description=Feishu LLM bot
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/llm/feishu-bot
+ExecStart=/opt/llm/miniconda/envs/feishu/bin/python feishu_bot.py
+Restart=on-failure
+RestartSec=5
+Environment=TZ=Asia/Shanghai
+
+[Install]
+WantedBy=multi-user.target
